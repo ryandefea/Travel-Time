@@ -22,9 +22,31 @@ namespace TravelTime.Controllers
 
     //GET api/destinations
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Destination>>> Get()
+    public async Task<List<Destination>> Get(string city, string country, string review, int rating)
     {
-      return await _db.Destinations.ToListAsync(); 
+      IQueryable<Destination> query = _db.Destinations.AsQueryable();
+
+      if (city != null)
+      {
+        query = query.Where(entry => entry.City == city);
+      }
+
+      if (country != null)
+      {
+        query = query.Where(entry => entry.Country == country);
+      }
+
+      if (review != null)
+      {
+        query = query.Where(entry => entry.Review == review);
+      }
+
+      if (rating > 0)
+      {
+        query = query.Where(entry => entry.Rating >= rating);
+      }
+
+      return await query.ToListAsync();
     }
 
     //POST api/destinations
