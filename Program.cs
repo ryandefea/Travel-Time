@@ -24,3 +24,5 @@ namespace TravelTime
                 });
     }
 }
+
+//delete swagger lines from this file and put in startup
